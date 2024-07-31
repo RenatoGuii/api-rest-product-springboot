@@ -4,7 +4,6 @@ import com.example.springboot.dtos.StandartError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,6 +21,17 @@ public class ResourceExceptionHandler {
         err.setStatus(HttpStatus.NOT_FOUND.value());
         err.setError("Resource not found");
         err.setMsg("There are one or more empty or invalid fields");
+        err.setPath(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<StandartError> entityNotFoundException (EntityNotFoundException e, HttpServletRequest request) {
+        StandartError err = new StandartError();
+        err.setTimeStamp(Instant.now());
+        err.setStatus(HttpStatus.NOT_FOUND.value());
+        err.setError("Resource not found");
+        err.setMsg(e.getMessage());
         err.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }

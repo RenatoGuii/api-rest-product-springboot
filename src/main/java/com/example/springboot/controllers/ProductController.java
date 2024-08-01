@@ -1,7 +1,7 @@
 package com.example.springboot.controllers;
 
 
-import com.example.springboot.dtos.ProductRecordDto;
+import com.example.springboot.dtos.ProductRecordDTO;
 import com.example.springboot.models.ProductModel;
 import com.example.springboot.repositories.ProductRepository;
 import com.example.springboot.services.ProductService;
@@ -25,7 +25,7 @@ public class ProductController {
     private ProductRepository productRepository;
 
     @PostMapping("/products")
-    public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDto productRecordDto) {
+    public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDTO productRecordDto) {
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productRecordDto, productModel);
         productService.saveProduct(productModel);
@@ -45,7 +45,7 @@ public class ProductController {
     }
 
     @PutMapping("/products/{id}")
-    public ResponseEntity<Object> updateProduct(@PathVariable(value="id") UUID id, @RequestBody @Valid ProductRecordDto productRecordDto) {
+    public ResponseEntity<Object> updateProduct(@PathVariable(value="id") UUID id, @RequestBody @Valid ProductRecordDTO productRecordDto) {
           ProductModel product = productService.updateProduct(id, productRecordDto);
           return ResponseEntity.status(HttpStatus.OK).body(productRepository.save(product));
     }

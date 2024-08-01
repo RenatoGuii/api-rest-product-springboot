@@ -1,7 +1,7 @@
 package com.example.springboot.services;
 
 import com.example.springboot.controllers.ProductController;
-import com.example.springboot.dtos.ProductRecordDto;
+import com.example.springboot.dtos.ProductRecordDTO;
 import com.example.springboot.exceptions.EntityNotFoundException;
 import com.example.springboot.models.ProductModel;
 import com.example.springboot.repositories.ProductRepository;
@@ -46,7 +46,7 @@ public class ProductService {
         return product.get();
     }
 
-    public ProductModel updateProduct(UUID id, ProductRecordDto productRecordDto) {
+    public ProductModel updateProduct(UUID id, ProductRecordDTO productRecordDto) {
         Optional <ProductModel> product = productRepository.findById(id);
         if (product.isEmpty()) {
             throw new EntityNotFoundException("There is no product with this identification");
